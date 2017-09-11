@@ -1,0 +1,376 @@
+h1 {
+  font-family: Verdana, Geneva, Lucida, Helvetica, Arial, sans-serif;
+}
+
+html {
+    /* Prevents the page from jumping a couple pixels back and forth when switching between pages*/
+    overflow-y:scroll;
+}
+h2 {
+/*  background-image: url("http://www.cdf.toronto.edu/~csc108h/winter/images/hbg70.jp"g); */
+  border-bottom: solid 1px #005070;
+  border-top: solid 1px #005070;
+  /* color: #336699;*/
+}
+
+h3, h4, h5, h6 {
+}
+
+html, body, table {
+  background: #fff;
+  color: #000;
+  font-family: Verdana, Geneva, Lucida, Helvetica, Arial, sans-serif;
+}
+
+body{
+    margin:0;
+}
+
+table.sections {
+    float: right;
+    color: #005070;
+    background-color: #fff;
+}
+
+table.sections thead {
+    color:#fff;
+    background-color: #005070;
+}
+
+table.instructors {
+    text-align: center;
+    color: #222;
+    background-color: #fff;
+    border: solid 1px #aaa;
+}
+
+table.lectures {
+    width: 100%;
+    color: #222;
+    border-collapse: collapse;
+    background-color: #fff;
+}
+
+table.lectures thead {
+    font-weight: bold;
+    color:#fff;
+    background-color: #005070;
+}
+
+table.lectures td {
+width: 10%;
+ }
+
+table.lectures tbody tr td {
+    padding: 0.25em;
+    border-right: 1px solid #005070;
+    border-left: 1px solid #005070;
+}
+
+table.lectures tbody tr td ul {
+    list-style-type: none;
+    padding: 5px;
+    margin: 5px;
+}
+
+table.lectures tbody tr:nth-child(odd) {
+    background-color: #ffffff;
+    text-align: left;
+    vertical-align: top;
+    border: 1px solid #222;
+}
+
+table.lectures tbody tr:nth-child(even) {
+    background-color: #E0ECF8;
+    text-align: left;
+    border: 1px solid #222;
+}
+
+table.calendar {
+    width: 100%;
+    color: #222;
+    border-collapse: collapse;
+    background-color: #fff;
+}
+
+table.calendar thead {
+    font-weight: bold;
+    color:#fff;
+    background-color: #005070;
+}
+
+table.calendar td {
+width: 10%;
+ }
+
+table.calendar tbody tr td {
+    list-style: none;
+    padding: 0.25em;
+    border-right: 1px solid #005070;
+    border-left: 1px solid #005070;
+}
+
+table.calendar tbody tr td ul {
+    list-style-type: none;
+    padding: 5px;
+    margin: 5px;
+}
+
+table.calendar tbody tr:nth-child(odd) {
+    background-color: #ffffff;
+    text-align: left;
+    vertical-align: top;
+    border: 1px solid #222;
+}
+
+table.calendar tbody tr:nth-child(even) {
+    background-color: #00B0D0;
+    text-align: left;
+    vertical-align: top;
+    border: 1px solid #222;
+}
+
+div.content {
+  clear: both;
+  position: absolute;
+  float: left;
+  margin-left: 20%;
+  width: 78%;
+  font-family: Verdana, Geneva, Lucida, Helvetica, Arial, sans-serif;
+}
+
+div.campus_announcements {
+  position: absolute;
+  clear: none;
+  float: left;
+  width: 38%;
+  margin-left: 20%;
+/*  margin-bottom: 2.5ex; */
+}
+
+div.campus_announcements .date {
+  float: right;
+  background: white;
+  color: #005070;
+  font-family: Courier, fixed;
+  font-weight: bold;
+}
+
+div.campus_announcements .title {
+  float: left;
+  background: white;
+  color: #005070;
+  font-weight: bold;
+}
+
+div.campus_announcements .body {
+  clear: both;
+  background: white;
+  color: #005070;
+}
+
+div.campus_announcements ul {
+  padding-left: 0;
+  margin-left: 0;
+}
+
+div.campus_announcements ul > li {
+  list-style: none;
+  margin: 0;
+  padding: 0.25em;
+  border-top: 1px solid gray;
+}
+
+div.course_announcements {
+  position: absolute;
+  clear: none;
+  float: left;
+  width: 38%;
+  margin-left: 59%;
+/*  margin-bottom: 2.5ex; */
+}
+
+div.course_announcements .date {
+  float: right;
+  background: white;
+  color: #005070;
+  font-family: Courier, fixed;
+  font-weight: bold;
+}
+
+div.course_announcements .title {
+  float: left;
+  background: white;
+  color: #005070;
+  font-weight: bold;
+}
+
+div.course_announcements .body {
+  clear: both;
+  background: white;
+  color: #005070;
+}
+
+div.course_announcements ul {
+  padding-left: 0;
+  margin-left: 0;
+}
+
+div.course_announcements ul > li {
+  list-style: none;
+  margin: 0;
+  padding: 0.25em;
+  border-top: 1px solid gray;
+}
+
+img {/* border style for all images */
+  border: 0;
+}
+
+img.b4 {/* scalable em size class 468px/60px banners */
+  width: 16.83em; /* replaces 468px width */
+  height: 9.06em; /* replaces 60px height */
+}
+
+a:link {
+  color: #037;
+}
+
+a:visited {
+  color: #037;
+}
+
+div.title {
+  padding-right: 1em;
+  text-align: right;
+  font-size: 75%;
+  border: solid 3px #005070;
+  /* border: solid 3px #336699; */
+  /*background-image: url("http://www.cdf.toronto.edu/~csc108h/winter/images/hbg70.jpg");*/
+  margin-bottom: 2.5ex;
+  background-color: #005070;
+  /*  background-color: #336699; */
+  color: white;
+}
+
+.clear {
+  clear: both;
+  font-size: 1px;
+}
+
+.footer {
+  clear: none;
+  margin-left: 20%;
+  margin-top: 1px;
+  text-align: right;
+  border-top: solid 3px white;
+}
+
+.footer .left {
+  margin-top: 1px;
+  float: left;
+  text-align: left;
+  width: 60%;
+}
+
+.footer .right {
+  margin-top: 1px;
+  float: right;
+  text-align: right;
+  width: 40%;
+}
+
+.spacer {
+  clear: both;
+}
+
+p {
+  padding: 0;
+  margin-top: 0px;
+  font-family: Verdana, Geneva, Lucida, Helvetica, Arial, sans-serif;
+}
+
+dd {
+  font-family: Verdana, Geneva, Lucida, Helvetica, Arial, sans-serif;
+}
+
+dt {
+  font-family: Verdana, Geneva, Lucida, Helvetica, Arial, sans-serif;
+  font-weight: bold;
+}
+
+div.navigation {
+  clear: both;
+  position: absolute;
+  float: left;
+    text-transform: capitalize;
+    padding:10px 0;
+  width: 18%;
+  font-family: Verdana, Geneva, Lucida, Helvetica, Arial, sans-serif;
+ /* background-image: url("http://www.cdf.toronto.edu/~csc108h/winter/images/hbg70.jpg");*/
+  /* background-color: #336699; */
+  background-color: #005070;
+  color: white;
+}
+
+.navigation .links {
+  text-align: right;
+}
+
+div.navigation > ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+div.navigation > ul > li > a {
+    padding: 10px 0 10px 10px;
+}
+div.navigation > ul > li {
+    margin: 0;
+    padding: 0;
+}
+
+div.navigation p {
+  font-family: Verdana, Geneva, Lucida, Helvetica, Arial, sans-serif;
+  color: white;
+}
+
+div.navigation p:first-child {
+  border-top: none;
+}
+
+div.navigation a, div.navigation em {
+  display: block;
+  margin: 0 0.5em;
+}
+div.navigation a, div.navigation em {
+  border-top: 2px solid white;
+}
+
+div.navigation a:first-child {
+  border-top: none;
+}
+
+div.navigation a:link {
+  text-decoration: none;
+  color: white;
+}
+
+div.navigation a:visited {
+  text-decoration: none;
+  color: white;
+}
+
+div.navigation a:hover {
+  background: white;
+  color: #005070;
+}
+
+div.navigation a.validate:hover {
+  background: #005070;
+  color: white;
+}
+
+img {
+    object-fit: cover;
+}
