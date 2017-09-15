@@ -1,0 +1,124 @@
+Tutorial 1 (Curl and REST Apis)
+
+cURL is a command line tool for transferring data to and from servers.
+
+cURL supports various protocols and is not limited to http (supports FTP, FTPS, HTTP, HTTPS, IMAP,
+IMAPS, LDAP, LDAPS, POP3, POP3S, RTMP, RTSP, SCP, SFTP, SMTP, SMTPS, Telnet, TFTP etc.)
+
+----------------------------------------------------------------------------------------------------------
+
+Get a file at a given URL:
+
+    curl http://www.teach.cs.toronto.edu/~csc309h/fall/
+
+----------------------------------------------------------------------------------------------------------
+
+Save the cURL Output to a file:
+
+    We can save the result of the curl command to a file by using -o/-O options.
+    -o will let user specify the file name, -O will use the filename in the URL
+    
+    example: 1. curl -o world.html https://example.com/hello.html
+             2. curl -O https://example.com/hello.html
+
+    OR
+        use the stream redirection operation ('>' or '>>') to redirect data to a file
+            curl https://www.google.com > google.html
+
+----------------------------------------------------------------------------------------------------------
+
+Fetch Multiple Files at a time:
+
+    curl -O url1 -O url2
+
+----------------------------------------------------------------------------------------------------------
+
+To see HTTP response headers:
+
+    We can use the -i/--include option in curl:
+    example: curl -i http://google.com
+    response:
+                HTTP/1.1 302 Found
+                Cache-Control: private
+                Content-Type: text/html; charset=UTF-8
+                Referrer-Policy: no-referrer
+                Location: http://www.google.ca/?gfe_rd=cr&dcr=0&ei=m065We6jEoqR8Qf4r6uQBQ
+                Content-Length: 268
+                Date: Wed, 13 Sep 2017 15:28:27 GMT
+
+                <html>....</html>
+
+----------------------------------------------------------------------------------------------------------
+
+To follow HTTP location headers:
+
+    We can follow location headers using the -L flag (curl doesn't do this by default).
+    example: curl -L http://www.google.com (try!)
+
+----------------------------------------------------------------------------------------------------------
+
+Request Flags to make GET, PUT, POST, DELETE, PATH requests:
+
+    Can use --request flag followed by a HTTP method to specify the type of HTTP method in the curl request
+
+    example: curl --request GET https://www.google.com
+
+    OR
+
+    One can use -X prefix on a HTTP method to acheive the same.
+
+    example: curl -XPOST --data '{...}' https://myendpoint.com/api/user
+
+----------------------------------------------------------------------------------------------------------
+
+Specifying request flags:
+
+    Often when POSTing data you'll need to add headers for things like auth tokens or setting the 
+    content type. You can set a header using -H.
+    
+    curl -H "Content-Type: application/json" -H "authToken: 349ab29a-xtab-423b-a5hc-5623bc39b8c8" \ 
+                    --data '{..}' https://myapi/endpoint
+
+----------------------------------------------------------------------------------------------------------
+
+Sending data to the server using --data/-d flag:
+    One can send data using --data/-d
+    curl -H "Content-Type: application/json" \
+         -XPOST --data '{ "name": "morpheus", "job": "leader" }' https://reqres.in/api/users
+
+
+----------------------------------------------------------------------------------------------------------
+
+Authentication:
+
+    use the --user or -u flag for authentication
+    example: 
+    1. curl --user "random_username" -XPOST --data '{...}' https://myapi/endpoint
+    2. curl --user "random_username:password" -XPOST --data '{...}' https://myapi/endpoint
+
+    If no ":" is present in --user string, it will return back and the user has to type it in the terminal.
+    (prevents people from seeing passwords in curl requests)
+
+----------------------------------------------------------------------------------------------------------
+
+Exercises:
+
+    For the following questions, we will use https://reqres.in/api as our open REST api.
+
+    Write curl commands to do the following, and direct the output to a text file.
+
+    0. Get a list of at least 10 users 
+
+    1. Get the user whose id is 2 
+
+    2. Add a new user with data { "name": "morpheus", "job": "leader" } (Endpoint: /api/users)
+
+    3. Update the 2nd user with data { "name": "morpheus", "job": "zion resident" } (Endpoint: /api/users/2)
+
+    4. DELETE the 2nd user (Endpoint: /api/users/2)
+
+    5. Update only the field "name" and set it as "luke" for the 2nd user
+
+
+
+
