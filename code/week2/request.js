@@ -35,6 +35,9 @@ function getUsers(foundUsers) {
     // certain conditions.
     if (response.statusCode === 200) {
       let fullData = JSON.parse(body);
+      if (fullData.data) {
+        console.log("Last Name of first user: ", fullData.data[0].last_name)
+      }
       foundUsers(fullData.data);
     }
 
