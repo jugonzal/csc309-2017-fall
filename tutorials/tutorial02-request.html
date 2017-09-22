@@ -1,0 +1,57 @@
+<html>
+<h1>HTTP Request from Node.JS</h1>
+
+Today we'll look at the <a href="https://github.com/request/request">Request library</a>, a simple HTTP(S) client for Javascript, and explore JSON objects.
+
+<h2>Setup</h2>
+<p>You will need to prepare your working directory. </p>
+
+<code>
+cd ~<br>
+mkdir tut2<br>
+cd tut2<br>
+npm init -y<br>
+npm install request --save<br>
+touch mycurl.js<br>
+</code>
+
+<h2>Fireball API</h2>
+<p>Let us look at the <a href="https://ssd-api.jpl.nasa.gov/doc/fireball.html">Fireball Data API</a>. It gives us information about fireballs, or meteors, as observed by NASA. It's a very simple API, with three GET methods.</p>
+
+<h2>Code</h2>
+<p>Use the <a href="req-skel.js">snippet of code</a> below to get you started. Use it to edit the file <b>mycurl.js</b> This provides the basic skeleton for making your requests to any external HTTP server.</p>
+
+<code>
+const request = require('request')<br>
+<br>
+request.get('URL-HERE', function (err,res, body) {<br>
+  if(err) {<br>
+    console.log(err)<br>
+  } else {<br>
+    data = JSON.parse(body)<br> 
+<br>
+    //Modify this to access different JSON fields<br>
+    console.log(data) <br>
+  }<br>
+})<br>
+</code>
+
+<p>Try running the code using Node.js:</p>
+
+<code>
+  node mycurl.js
+</code>
+
+<h2>Exercises</h2>
+<p>Once you've been able to get your code up and running with the given API, proceed with the following exercises.  They are all related to managing the data you obtain from the API.  Your objective is to find the information asked for and display on screen (console.log).</p>
+<ol>
+  <li>Display the first 5 entries of the database (reverse chronological order)</li>
+  <li>Display the name of the API we are using from the response</li>
+  <li>Display the data fields available.</li>
+  <li>Display the velocity of the 4th object in the response</li>
+  <li>(optional) Display the count of records on or after 1st January 2017 (date-min argument).</li>
+</ol>
+
+
+</html>
+
