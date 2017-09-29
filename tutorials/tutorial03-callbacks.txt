@@ -1,0 +1,43 @@
+Tutorial: JS Callbacks
+
+A callback is a function which is passed as an argument to another function and which is invoked by the other function.
+
+So how do we synchronize asynchronous tasks?
+
+There are various ways of doing this (callbacks, promises, async/await etc.), this tutorial will focus on nesting of callbacks.
+
+Nesting of Callbacks
+
+   Task: We have an api that returns only one random number each time we call it.
+   
+   We need to get two numbers from the api, and print sum of the two numbers. How do we do it?
+
+   Solution:
+
+    function addTwoNumbers(url) {
+    
+        request.get(url, function (err, resp, body){
+            var data = JSON.parse(data)
+            /*
+                let us assume data is of the form 
+                data = {
+                    number: 40
+                }
+            */
+            var number1 = data['number'];
+            // we are nesting another request within the callback of the first request
+            request.get(url, function (err, resp, body) {
+                var data = JSON.parse(data)
+                var number2 = data['number'];
+                var sum = number1 + number2
+                console.log(sum);
+            })
+        })
+    }
+
+    You can test the function with the URL 'http://wolf.teach.cs.toronto.edu:3090/number'
+
+    Exercise: Think about how another function can call addTwoNumbers function to get the variable 'sum' so that it can use it's value.
+
+    Exercise (optional): How would you use Promises in this case?
+
