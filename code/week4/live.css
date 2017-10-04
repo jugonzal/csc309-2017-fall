@@ -1,0 +1,54 @@
+ 
+/*html {display:none;}
+*/
+
+/*div {
+  border-color: red;
+  border-style: double;
+}
+*/
+
+/* explore combinators
+try with .date + .title   or .date + li */
+/*.title  a  {
+  border-color: red;
+  border-style: double;
+}
+*/
+
+/* this one looses against the inline style */
+/*#uoftworld-home-block {
+  background-color: red;
+}
+*/
+/*a:hover {color: pink;}
+*/
+/*p::first-letter {
+       color: #ff0000;
+       font-size: xx-large;
+    }
+
+*/
+/* also try using relative length */
+/*.container {
+  width: 70%;
+}
+*/
+/* this will fail due to other computed styles. Try inline */
+/*.homeEventsBlock {
+  font-size: 8px;
+}*/
+
+/* review layout, positioning and floatign */
+/*.article-from {
+  float: right;
+  position: absolute;
+  top: 0px;
+  left: 350px;
+}
+*/
+@media (max-width: 800px) {
+  #node-117991,#uoftworld-home-block {
+    display: none;
+  }
+}
