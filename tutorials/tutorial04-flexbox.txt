@@ -1,0 +1,107 @@
+Tutorial On HTML and CSS
+--------------------------
+Today, We are going to work on two subjects! 
+Media Queries and FlexBox
+
+***********************************************
+
+Media Queries
+----------------
+CSS Media Queries allow you to define CSS rules based on different characteristics 
+of different devices that can browse the web. So, you can specify different set of 
+rules for moblie phones, tablets,laptops and have a responsive webpage! 
+Here's how you do it :
+
+for screens with smaller width that 500px
+
+@media only screen and (max-width: 500px) and (orientation: landscape) { 
+    /* Some CSS rules */    
+}
+
+Note : If you're using screen size to differ between devices don't forget to include
+the following tag in the <head> section of your html page !
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+Exercise: 
+
+We want the background to change for different screen sizes:
+for mobile phones : red
+for tablets : green
+for desktops and laptops : blue
+make that happen using media queries !
+
+************************************************************************************
+FlexBox
+---------
+FlexBox allows you to define small scale layouts much easier than you could with previous
+versions of CSS. You can manage empty spaces and ordering of elements in your Flex 
+components easily !
+
+Note the following example: 
+
+<html>
+<head>
+    <style>
+        .container {
+            border-style: solid;
+            border-width: medium;
+            margin: auto;
+            justify-content: space-between;
+            padding: 20px;
+            /*flex-wrap: wrap;*/
+            box-sizing: border-box;
+            display:flex;
+        width:80%;
+        }
+        .item {
+            padding: 5px;
+            height: 400px;
+            border-style: solid;
+            border-width: thin;
+            box-sizing: border-box;
+        }
+        .item1 {
+            /*flex:1;*/
+            flex-basis: 25%;
+        }
+        .item2 {
+            /*flex:2;*/
+            flex-basis: 50%;
+        }
+        .item3 {
+            /*flex:1;*/
+            flex-basis: 10%;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="item item1">
+            <h2>This is the first Item</h2>
+            <p>
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                Aenean pellentesque pellentesque tellus ac ultrices.
+             </p>
+        </div>
+        <div class="item item2">
+            <h2>This is the second item</h2>
+            <p>
+                Vestibulum ante ipsum primis in faucibus orci luctus et
+                ultrices posuere cubilia Curae; Pellentesque tempus
+                ex et mi tristique, vitae interdum massa fermentum. Maecenas
+            </p>
+        </div>
+        <div class="item item3">
+            <h2>This is the third item</h2>
+            <p>
+                mauris augue, elementum ac pellentesque ac, molestie nec arcu
+            </p>
+        </div>
+    </div>
+</body>
+</html>
+
+Exercise: Find a way to change the items order of appearance without modifying their order
+in the HTML. ( you may consult online resources) 
+
