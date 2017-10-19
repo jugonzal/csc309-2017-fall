@@ -1,0 +1,57 @@
+<head>
+  <!-- Go to https://code.jquery.com to find the latest -->
+  <script
+  src="https://code.jquery.com/jquery-3.2.1.min.js"
+  integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+  crossorigin="anonymous"></script>  
+  <!-- <script src="https://code.jquery.com/jquery-3.1.1.js"></script> -->
+</head>
+<body>
+  <h1>jQuery &amp; AJAX</h1>
+  <h2>The front-end</h2>
+  <div id="data">
+    <ul id="list"></ul>
+  </div>
+  <div id="images"></div>  
+  <script>
+  function updateData() {
+    $.ajax({
+      // url: 'address.json',
+      url: 'https://maps.googleapis.com/maps/api/geocode/json?address=50%20St.%20George,%20Toronto,ON&sensor=false',
+      method: 'GET',
+      dataType: 'html'
+    }).then(data => {
+      console.log('Success ' + data);
+      // $("#data").append(data)
+      d = JSON.parse(data)
+      // $( "#data" ).append( "Postal Code: " + d.results[0].address_components[7].long_name )
+      d.results[0].address_components.forEach(elem => {
+        $("<li>").text(elem.long_name).appendTo("#list")
+      })
+    }).catch(err => {
+      console.log(err);
+      alert('failed to retrieve');
+    });    
+  }
+  function getImages() {
+
+    $.getJSON("http://api.flickr.com/services/feeds/photos_public.gne?jsoncallback=?",
+    {
+        tags: "mount rainier",
+        tagmode: "any",
+        format: "json"
+    },
+    function (data) {
+      $.each(data.items, function (i, item) {
+            $("<img/>").attr("src", item.media.m).appendTo("#images");
+            if (i == 12) return false;
+        });
+    });
+  
+  }
+  $("h2").on("click", updateData)
+  $("h1").on("click", getImages)
+  </script>
+  <script src="client.js"></script>
+</body>
+

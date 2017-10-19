@@ -1,0 +1,74 @@
+{
+   "results" : [
+      {
+         "address_components" : [
+            {
+               "long_name" : "1",
+               "short_name" : "1",
+               "types" : [ "street_number" ]
+            },
+            {
+               "long_name" : "Microsoft Way",
+               "short_name" : "Microsoft Way",
+               "types" : [ "route" ]
+            },
+            {
+               "long_name" : "Overlake",
+               "short_name" : "Overlake",
+               "types" : [ "neighborhood", "political" ]
+            },
+            {
+               "long_name" : "Redmond",
+               "short_name" : "Redmond",
+               "types" : [ "locality", "political" ]
+            },
+            {
+               "long_name" : "King County",
+               "short_name" : "King County",
+               "types" : [ "administrative_area_level_2", "political" ]
+            },
+            {
+               "long_name" : "Washington",
+               "short_name" : "WA",
+               "types" : [ "administrative_area_level_1", "political" ]
+            },
+            {
+               "long_name" : "United States",
+               "short_name" : "US",
+               "types" : [ "country", "political" ]
+            },
+            {
+               "long_name" : "98052",
+               "short_name" : "98052",
+               "types" : [ "postal_code" ]
+            },
+            {
+               "long_name" : "6399",
+               "short_name" : "6399",
+               "types" : [ "postal_code_suffix" ]
+            }
+         ],
+         "formatted_address" : "1 Microsoft Way, Redmond, WA 98052, USA",
+         "geometry" : {
+            "location" : {
+               "lat" : 47.6393225,
+               "lng" : -122.1283833
+            },
+            "location_type" : "ROOFTOP",
+            "viewport" : {
+               "northeast" : {
+                  "lat" : 47.6406714802915,
+                  "lng" : -122.1270343197085
+               },
+               "southwest" : {
+                  "lat" : 47.6379735197085,
+                  "lng" : -122.1297322802915
+               }
+            }
+         },
+         "place_id" : "ChIJCxXe93NtkFQRoOkFk9GZJJI",
+         "types" : [ "street_address" ]
+      }
+   ],
+   "status" : "OK"
+}
