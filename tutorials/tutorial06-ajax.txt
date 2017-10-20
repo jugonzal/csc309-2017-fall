@@ -1,0 +1,77 @@
+AJAX and JQuery
+----------------
+In this tutorial we will talk about Ajax and JQuery , which stands for Asynchronous JavaScript and XML BUT we won't use XML !! We'll use JSON !
+
+Ajax is a technology that's allows web browsers to send request without refreshing the page by allowing web pages to be updated asynchronously. For example, online maps don't refresh the page each time you zoom in and zoom out. They use Ajax to send requests to the web servers and request the data they need.
+
+We will exchange data with a server and based on the data we receive or post, take different actions on the web page. JQuery lets you use its built in functions to perform lots of tasks easily and efficiently. One of those tasks is communication with web servers via the XMLhttpRequest object, which is a browser built-in object. That's Ajax !!
+
+Assuming you have include jQuery in your page, here's how you do it:
+
+$.ajax({
+    type: 'GET', // or POST, etc
+    url: 'http://some.url/path', // server being contacted
+    success: function(data) {
+        // You use this function in the case of success of the data exchange btw
+        // your client(web browser running your jquery code) and the server
+    },
+    error: function(xhr, error) {
+        console.log("Something went wrong: ", error)
+    }
+});
+
+**************************************************************************************
+Example:
+----------
+
+Save and open the code in an html file and run it on any web browser
+
+Note:
+    >> How the code adds and uses JQuery
+    >> How the $.ajax() function works
+    >> How the list elements are added dynamically
+
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Ajax Test</title>
+    </head>
+    <body>
+        <button id="magic">
+            Click to see the magic
+        </button>
+        <ul class="modify">
+        </ul>
+    </body>
+    <script
+      src="https://code.jquery.com/jquery-3.2.1.min.js"
+      integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+      crossorigin="anonymous"></script>
+    <script>
+        $(function(){
+                $.ajax({
+                    type:'GET',
+                    url: 'https://jsonplaceholder.typicode.com/users',
+                    success:function(data){
+                        // similar to enumerate in python
+                        $.each(data,function(i,item){
+                            $('<li>')
+                            .text(item.name)
+                            .appendTo('.modify')
+                        })
+                    }
+                });
+            });
+    </script>
+</html>
+
+****************************************************************************
+Exercise:
+---------
+1 - In the previous example, we didn't actually see the power of Ajax. Any page can display a list of items. What Ajax does, however, is that it allows you to do that without refreshing the page. So let's test that. Modify the code so that users only see the data WHEN they click on the button.  You'll need to work with Event Listeners to make this happen.
+
+2 - Modify the code to direct the request to your chosen API for Assignment #2.
+
+
