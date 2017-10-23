@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+  </head>
+  <body style="padding:40px;">
+    <% include ../partials/_header %>
+
+    <a href="/courses/create" class="btn btn-primary">Create New Course</a>
+    <hr>
+
+    <table class="table table-bordered table-striped">
+      <% for (let code in courses) { %>
+        <tr>
+          <td><%= courses[code].what %></td>
+          <td><%= courses[code].who %></td>
+          <td><%= courses[code].when %></td>
+          <td>
+            <a href="/courses/<%= code %>/edit" class="btn btn-default">Edit</a>
+          </td>
+          <td>
+            <form action="/courses/<%= code %>?_method=DELETE" method="POST">
+              <button class="btn btn-default">Delete !</button>
+            </form>
+          </td>
+        </tr>
+      <% } %>
+    </table>
+  </body>
+</html>

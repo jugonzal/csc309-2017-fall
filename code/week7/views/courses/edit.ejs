@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+</head>
+<body style="padding:40px;">
+  <% include ../partials/_header %>
+
+  <h2>Edit a Course</h2>
+  <form class="form" action="/courses/<%= course.id %>?_method=PUT" method="post">    
+    <label for="name">Description:</label>
+    <input id="what" type="text" name="what" style="width: 50%" value="<%= course.what %>"
+    >
+    <br>
+    <label for="name">Professor:</label>
+    <input id="who" type="text" name="who" style="width: 25%" value="<%= course.who %>"
+    >
+    <br>
+    <input type="submit" value="Submit" class="btn btn-default">
+  </form>
+</body>
+</html>
