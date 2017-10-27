@@ -1,0 +1,112 @@
+<html>
+    <style>
+        pre code {
+            background-color: #eee;
+            border: 1px solid #999;
+            display: inline-block;
+            padding: 10px;
+          }
+    </style>
+    <body>
+        <h2>Express Tutorial</h2>
+        
+        <p>
+            Express is a minimal and flexible Node.js web application framework. It is an open source framework developed and maintained by the Node.js foundation.
+        </p>
+        <p>Today we'll be going over basics of <b>routing</b> in Express</p>
+        <h3>Route methods</h3>
+        <p>We use <pre><code>app.METHOD(route_path, route_handler)</code></pre> to specify routes in Express where METHOD can be a HTTP verb (GET, PUT, POST, DELETE)</p>
+        <p>This example illustrates a simple GET route with route path as "/hello"</p>
+        <pre><code>
+            const express = require('express');
+            const app = express();
+
+            app.get('/hello', function(req, res) {
+                res.send("Hello World!")
+            });
+
+            app.listen(3000);
+        </code></pre>
+        <p>Run the above program and try to "curl localhost:3000/hello" and see the result</p>
+        <h3>Route paths</h3>
+        <p>Route paths can be strings, string patterns, or regular expressions.</p>
+        <p>The characters ?, +, *, and () are subsets of their regular expression counterparts. The hyphen (-) and the dot (.) are interpreted literally by string-based paths.
+            More on how this at <a href="http://expressjs.com/en/guide/routing.html">http://expressjs.com/en/guide/routing.html</a>
+        </p>
+        <p>The following example illustrates regular expressions in route paths</p>
+        <pre><code>
+            // This route path will match abcd, abbcd, abbbcd, and so on.
+            app.get('/ab+cd', function (req, res) {
+                res.send('ab+cd')
+            })
+
+            // This route path will match /abe and /abcde.
+            app.get('/ab(cd)?e', function (req, res) {
+                res.send('ab(cd)?e')
+            })
+
+            // This route path will match abcd, abxcd, abRANDOMcd, ab123cd, and so on.
+            app.get('/ab*cd', function (req, res) {
+                res.send('ab*cd')
+            })
+        </code></pre>
+
+        <h3>Route parameters</h3>
+        <p>Route parameters are named URL segments that are used to capture the values specified at their position in the URL.
+            The captured values are populated in the <b>req.params</b> object, with the name of the route parameter specified in the path as their respective keys.</p>
+        <p>The captured segments are prefixed with a colon and then the name <b>(e.g. /:your_parameter_name)</b>.</p>
+
+        <p>
+                So for example, consider a URL encoded to contain information about users and books: <b>http://localhost:3000/users/34/books/8989</b>. We can extract this information as shown below, with the userId and bookId path parameters:
+        </p>
+
+        <pre><code>
+            app.get('/users/:userId/books/:bookId', function (req, res) {
+                // Access userId via: req.params.userId
+                // Access bookId via: req.params.bookId
+                res.send(req.params);
+            })
+        </code></pre>
+        <h3>Chaining route handlers</h3>
+        <p>If a route path to many route handlers are the same, we can chain route handlers</p>
+
+        <pre><code>
+        app.route('/book')
+            .get(function (req, res) {
+                res.send('Get a random book')
+            })
+            .post(function (req, res) {
+                res.send('Add a book')
+            })
+            .put(function (req, res) {
+                res.send('Update the book')
+            })
+        </code></pre>
+
+        <h3>express.Router</h3>
+        <p>To create modular and mountable route handlers, use the express.Router class. A Router instance is a complete middleware and routing system; for this reason, it is often referred to as a “mini-app”.
+            More on express middleware <a href="http://expressjs.com/en/guide/writing-middleware.html">here</a></p>
+        <pre><code>
+            const express = require('express');
+            const app = express()
+            const router = express.Router();
+            
+            // ...
+
+
+            // Home page route
+            router.get('/', (req, res) => {
+                res.send('Wiki home page');
+            })
+            
+            // About page route
+            router.get('/about', (req, res) => {
+                res.send('About this wiki');
+            })
+
+            app.use('/site', router)
+
+            // the app will now be able to handle requests to /site and /site/about
+        </code></pre>
+    </body>
+</html>

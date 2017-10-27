@@ -3,6 +3,8 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const methodOverride = require("method-override");
 const morgan = require('morgan');
+const cookieParser = require('cookie-parser');
+
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -12,19 +14,31 @@ app.set("view engine", "ejs");
 app.use(express.static('public'))
 
 app.use(bodyParser.urlencoded({extended: false}));
+
 app.use(methodOverride("_method"));
 
+app.use(cookieParser("my very well kept secret"))
+
 function myLogger(req, res, next) {
-  console.log('LOG:',req.method,req.url,req.body)
+  // console.log("Raw Cookies: ",req.headers.cookie)
+  console.log("Cookie Parser: ",req.cookies)
+  console.log("Signed Cookies: ",req.signedCookies)
+  if (req.body) {
+    console.log('LOG:',req.method,req.url,req.body)
+  }
+  // res.append('Set-Cookie', 'lastPage='+req.url);
   next()
 }
+
+var sessions = {
+  "uniqueSessionID001": {name: "username", password: "pwd", cart: "$100"}
+}
+
 
 app.use(myLogger)
 
 // Generate Apache Common Log format
 app.use(morgan('common'));
-
-
 
 // Support Routes
 app.get('/', function (req, res) {
@@ -35,6 +49,7 @@ app.get('/', function (req, res) {
 app.get("/courses/create", (req, res) => {
   res.render("courses/create");
 });
+
 
 app.get("/courses/:id/edit", (req, res) => {
   res.render("courses/edit", {
@@ -49,6 +64,14 @@ app.get("/courses", (req, res) => {
   });
 });
 
+app.get("/courses/csc404", (req, res) => {
+  res.send(`<html>
+    <body>
+      <p>This is not a REAL course</p>
+    </body>
+  </html`)
+});
+
 app.post("/courses", (req, res) => {
   db.add({
     id: req.body.code,
@@ -56,6 +79,9 @@ app.post("/courses", (req, res) => {
     what: req.body.what,
     who: req.body.who
   });
+  res.cookie('Prof',req.body.who)
+  res.cookie('Course',req.body.code, {signed:true})
+
   res.redirect("/courses")
 });
 
