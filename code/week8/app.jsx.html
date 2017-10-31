@@ -1,0 +1,124 @@
+
+class SimpleWidget extends React.Component {
+  render() {
+    return (
+      <div className="simple-widget">
+        <h3>Currency Exchange Rates</h3>
+        <ul>
+          <li>CAD -> 1.45</li>
+          <li>USD -> 1.01</li>
+          <SimpleItem currency="JPY -> ???" />
+        </ul>
+      </div>
+    )
+  }
+}
+
+class SimpleItem extends React.Component {
+  render() {
+    return (
+      <li>
+        {this.props.currency}
+      </li>
+    )
+  }
+}
+
+class ExchangeApp extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = { 
+      items: [], 
+      text: '',
+      rates: {
+        "AUD": 1.5346,
+        "CAD": 1.4577,
+        "CHF": 1.6043,
+        "CYP": 0.5767,
+        "CZK": 36.063,
+        "DKK": 7.4404,
+        "EEK": 15.647,
+        "GBP": 0.6246,
+        "HKD": 7.8624,
+        "HUF": 254.53,
+        "ISK": 73.03,
+        "JPY": 102.75,
+        "KRW": 1140,
+        "LTL": 4.0454,
+        "LVL": 0.5916,
+        "MTL": 0.4151,
+        "NOK": 8.062,
+        "NZD": 1.9331,
+        "PLN": 4.1835,
+        "ROL": 18273,
+        "SEK": 8.552,
+        "SGD": 1.6769,
+        "SIT": 198.89,
+        "SKK": 42.317,
+        "TRL": 546130,
+        "USD": 1.009,
+        "ZAR": 6.2013
+      } 
+    };
+    this.handleChange = this.handleChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
+  }
+
+  render() {
+    return (
+      <div>
+        <h3>Currency Exchange Rates</h3>
+        <CurrencyList items={this.state.items} />
+        <form onSubmit={this.handleSubmit}>
+          <input
+            onChange={this.handleChange}
+            value={this.state.text}
+          />
+          <button>
+            Add #{this.state.items.length + 1}
+          </button>
+        </form>
+      </div>
+    );
+  }
+
+  handleChange(e) {
+    this.setState({ text: e.target.value });
+  }
+
+  handleSubmit(e) {
+    e.preventDefault();
+    if (!this.state.text.length) {
+      return;
+    }
+    const newItem = {
+      text: this.state.text,
+      id: Date.now(),
+      rate: this.state.rates[this.state.text]
+    };
+    this.setState(prevState => ({
+      items: prevState.items.concat(newItem),
+      text: ''
+    }));
+  }
+}
+
+class CurrencyList extends React.Component {
+  render() {
+    return (
+      <ul>
+        {this.props.items.map(item => (
+          <Item key={item.id} text={item.text} rate={item.rate} />
+        ))}
+      </ul>
+    );
+  }
+}
+
+function Item(props) {
+  return (
+    <li>{props.text} -> {props.rate}</li>
+  )
+}
+
+ReactDOM.render(<ExchangeApp />, document.getElementById('root'));
