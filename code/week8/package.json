@@ -3,14 +3,16 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
-  "dependencies": {},
+  "dependencies": {
+    "express": "^4.16.2"
+  },
   "devDependencies": {
     "babel-cli": "^6.26.0",
     "babel-preset-react": "^6.24.1"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "react": "./node_modules/.bin/babel app.jsx.html > app.js" 
+    "react": "./node_modules/.bin/babel app.jsx.html > public/app.js"
   },
   "keywords": [],
   "author": "",

@@ -43,39 +43,32 @@ class ExchangeApp extends React.Component {
     super(props);
     this.state = {
       items: [],
+      date: '2017-10-31',
       text: '',
-      rates: {
-        "AUD": 1.5346,
-        "CAD": 1.4577,
-        "CHF": 1.6043,
-        "CYP": 0.5767,
-        "CZK": 36.063,
-        "DKK": 7.4404,
-        "EEK": 15.647,
-        "GBP": 0.6246,
-        "HKD": 7.8624,
-        "HUF": 254.53,
-        "ISK": 73.03,
-        "JPY": 102.75,
-        "KRW": 1140,
-        "LTL": 4.0454,
-        "LVL": 0.5916,
-        "MTL": 0.4151,
-        "NOK": 8.062,
-        "NZD": 1.9331,
-        "PLN": 4.1835,
-        "ROL": 18273,
-        "SEK": 8.552,
-        "SGD": 1.6769,
-        "SIT": 198.89,
-        "SKK": 42.317,
-        "TRL": 546130,
-        "USD": 1.009,
-        "ZAR": 6.2013
-      }
+      rates: {}
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleDateChange = this.handleDateChange.bind(this);
+    this.refreshRates = this.refreshRates.bind(this);
+  }
+
+  refreshRates() {
+    fetch("http://api.fixer.io/" + this.state.date).then(response => {
+      console.log(response.status, response.statusCode);
+      if (response.ok) {
+        return response.json();
+      } else {
+        throw "No Rates";
+      }
+    }).then(json => {
+      console.log("GOT ", json);
+      this.setState({ rates: json.rates });
+    }).catch(error => console.log(error));
+  }
+
+  componentDidMount() {
+    this.refreshRates();
   }
 
   render() {
@@ -85,9 +78,16 @@ class ExchangeApp extends React.Component {
       React.createElement(
         "h3",
         null,
-        "Currency Exchange Rates"
+        "Currency Exchange Rates for",
+        React.createElement(DatePicker, {
+          currentDate: this.state.date,
+          dateChange: this.handleDateChange
+        })
       ),
-      React.createElement(CurrencyList, { items: this.state.items }),
+      React.createElement(CurrencyList, {
+        items: this.state.items,
+        rates: this.state.rates
+      }),
       React.createElement(
         "form",
         { onSubmit: this.handleSubmit },
@@ -103,6 +103,10 @@ class ExchangeApp extends React.Component {
         )
       )
     );
+  }
+
+  handleDateChange(e) {
+    this.setState({ date: e.target.value }, this.refreshRates);
   }
 
   handleChange(e) {
@@ -126,12 +130,21 @@ class ExchangeApp extends React.Component {
   }
 }
 
+class DatePicker extends React.Component {
+  render() {
+    return React.createElement("input", {
+      value: this.props.currentDate,
+      onChange: this.props.dateChange
+    });
+  }
+}
+
 class CurrencyList extends React.Component {
   render() {
     return React.createElement(
       "ul",
       null,
-      this.props.items.map(item => React.createElement(Item, { key: item.id, text: item.text, rate: item.rate }))
+      this.props.items.map(item => React.createElement(Item, { key: item.id, text: item.text, rate: this.props.rates[item.text] }))
     );
   }
 }
