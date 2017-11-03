@@ -1,0 +1,112 @@
+React/fetch Tutorial
+----------------
+        
+Today we'll be going over basics of React, including best practices to connect to external sources of data via the fetch API.
+        
+Setup
+------
+Use the two snippets of code below to setup your HTML and JSX files.  If you recall JSX can be converted into proper Javascript by running Babel ( https://babeljs.io/docs/plugins/preset-react/ )
+
+index.html
+------------------------------------------------------------
+<html>
+  <head>
+    <script crossorigin src="https://unpkg.com/react/umd/react.development.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom/umd/react-dom.development.js"></script>
+  </head>
+  <body>
+    <div id="root">
+    </div>
+  </body>
+  <script src="app.js"></script>
+</html>
+------------------------------------------------------------
+
+app.jsx
+------------------------------------------------------------
+class TutorialApp extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = { 
+      // these "items" will be displayed in list format
+      items: [], 
+    };
+    this.handleSubmit = this.handleSubmit.bind(this);
+  }
+
+  render() {
+    return (
+      <div>
+        <h3>React / Fetch Tutorial</h3>
+        <PlainList items={this.state.items} />
+        <form onSubmit={this.handleSubmit}>
+          <button>
+            Fetch Data
+          </button>
+        </form>
+      </div>
+    );
+  }
+
+  handleSubmit(e) {
+    e.preventDefault();
+    // by changing the state we force all components to render
+    this.setState({items: ['First','Second','Third']})
+  }
+}
+
+class PlainList extends React.Component {
+  render() {
+    return (
+      <ul>
+        {this.props.items.map(item => (
+          <Item key={item} text={item} />
+        ))}
+      </ul>
+    );
+  }
+}
+
+function Item(props) {
+  return (
+    <li>{props.text}</li>
+  )
+}
+
+ReactDOM.render(<TutorialApp />, document.getElementById('root'));
+------------------------------------------------------------
+
+JSX -> JS
+---------
+If you try to open the index.html file now, you'll notice that the app.js file doesn't exists.  You will need to install and configure Babel with its React preset in order to create the JS version.
+
+For the purpose of this tutorial you will find what you need in this link:
+https://babeljs.io/docs/plugins/preset-react/
+
+Once you have succesfully converted the JSX into a JS file, try to reload the file in your browser and you should see a simple page with one button.  Click it and you'll see a simple list of items appear.
+
+
+Fetch Data
+----------
+As an exercise modify the code of this basic React application to retrieve data from your preferred API. As discussed in class, modern browsers provide "fetch" a powerful API to execute ajax calls without requiring other libraries. Use the code below to get you started. 
+
+------------------------------------------------------------
+    fetch("http://api.fixer.io/2017-11-02")
+    .then(response => { 
+      if (response.ok) {
+        return response.json()
+      } else {
+        throw "No Data"
+      }
+    })
+    .then(json => {
+      let newItems = []
+      for (let item in json.rates) {
+        newItems.push(item + " -> " +json.rates[item])
+      }
+      this.setState({items: newItems})
+    })
+    .catch(error => console.log(error))
+------------------------------------------------------------
+
+
