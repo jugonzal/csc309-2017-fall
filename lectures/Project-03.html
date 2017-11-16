@@ -1,0 +1,43 @@
+<style>
+main {font-size: 1.5em;}
+li {margin-bottom: 10px;}
+</style>
+<main>
+<h1>Assignment 3</h1>
+<h2>Final Project</h2>
+
+<p>After all the work you've put forward throughout the term, it is time to work towards the final project: a full-stack web application.  Your general requirements:
+</p>
+<ul>
+  <li>Your application must include a server-side component and a database</li>
+  <li>Your application must connect to at least one external public-facing API, ideally the same one you've been working with.</li>
+  <li>Your application should implement session management, allowing a variety of different users to use the application and manage their own data.</li>
+  <li>Your server must implement a RESTful API that extends/improves the behaviour of any API you've chosen to work with by allowing individual users to perform the 4 basic REST operations.</li>
+  <li>Your RESTful API must also implement the following 3 endpoints:
+    <ol>
+      <li>GET /api/messages</li>
+      <li>POST /api/messages</li>
+      <li>DELETE /api/messages/1234</li>
+    </ol>
+  The objective of these endpoints is to allow an external administrator to "push" status messages to all users of the application, making sure each user gets to see any new messages available as quickly as possible if they are logged in.  Messages should be shown in a prominent area of your main view, one at a time, but should not block the rest of the content.  
+  </li>
+  <li>You are responsible for making sure your project is deployed and running throughout the one hour when it will be evaluated.  Details on available timeframes below.</li>
+  <li>Aside from delivering the code for your project you are expected to demo a working version of it on the week when it is due. Regardless, using the main features of your project should be intuitive enough that any user with access to your URL should be able to discover all its features.</li>
+  <li>Include a <code>Solutions.md</code> explaining the features of your web application, the end-user and how s/he might use it.</li>
+  <li>You are expected to work in the same teams as Assignment 2, unless a TA contacted you with a change of teams.</li>
+  <li>The deadline for this assignment is Dec 4, 2017. The last commit before 2:00 PM on that date will be used for marking the assignment. If you plan on submitting the assignment late (refer course information for more details), you should include that in your Solutions.md.</li>
+</ul>
+<p>If you plan on deviating from these guidelines, talk to the prof or a TA and include an Instructions.md explaining your decision.</p>
+
+<!-- <p>The assignment sits here: <a href="https://classroom.github.com/g/jZjBSSlY">https://classroom.github.com/g/jZjBSSlY.</a> </p> -->
+
+<h3>Marking Considerations</h3>
+<ul>
+<li>Your project provides the ability to perform the 4 basic CRUD operations on your chosen collections.  For example, if your project uses a Movie API, you will be evaluated on whether you allow each user to query for movies, add, delete or update their own.  Even if the original API does not support these operations, you are expected to do so from your own server and relying on your own database.</li>
+<li>Your documentation about your own RESTful API is clear and concise, and demonstrates your understanding of proper REST design best practices</li>
+<li>Your project manages "messages" as expected and it is responsive in showing those messages prominently and in real-time as they are posted to the server.</li>
+<li>Your project is up and running at the time when it is evaluated</li>
+<li>Your application allows individual users to manage their own sessions without creating conflicts among themselves</li>
+<li>You will be marked on the functionality of your application, its style and usability, its responsiveness, code quality and structure, and how well the application serves your end-user.</li>
+</ul>
+</main>
