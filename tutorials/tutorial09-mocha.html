@@ -1,0 +1,195 @@
+<html>
+    <style>
+        pre code {
+            background-color: #eee;
+            border: 1px solid #999;
+            display: inline-block;
+            padding: 10px;
+          }
+    </style>
+    <body>
+        <h2>Mocha Tutorial</h2>
+        
+        <p>
+            Mocha is a feature-rich JavaScript test framework running on Node.js and in the browser, making asynchronous testing simple and fun.
+        </p>
+        <p>
+            Mocha tests run serially, allowing for flexible and accurate reporting, while mapping uncaught exceptions to the correct test cases.
+        </p>
+        <p>
+            To get started with today's tutorial:
+            <pre><code>
+        npm install -g mocha
+        mkdir mocha_tutorial
+        cd mocha_tutorial
+        npm init -y
+        mkdir test
+            </code></pre>
+        </p>
+        <p>Mocha finds test files under the folder 'test' by default and hence we created a folder named 'test'</p>
+        <p>Let's write our test's for today's tutorial in <strong>'test/test.js'</strong> file</p>
+        <p>We'll be using node's native assert module <a href='https://nodejs.org/api/assert.html'>https://nodejs.org/api/assert.html</a>, but there are many more assertion libraries that can be useful and more expressive</p>
+        <p>Some of them are: Chai, should.js, expect.js etc.</p>
+        <p>The basic boilder plate for testing is mocha is given below:</p>
+        <pre><code>
+            describe('Describe common functionality to be grouped here', function () {
+                it('Add a string that desribes a single test case here', function() {
+                    // testing ...
+                });
+            })
+        </code></pre>
+        <p>Create a file main.js in the root of the project and add a function that sorts an array</p>
+        <pre><code>
+            // file main.js
+            const allFunctions = {
+                sortArrayElements: function (arr) {
+                    return arr.sort()
+                }
+            }
+                
+            module.exports = {
+                allFunctions: allFunctions
+            }
+        </code></pre>
+        <p>Now lets try to test the sortArrayElements function</p>
+        <pre><code>
+            // test/test.js
+            const assert = require('assert');
+            const allFunctions = require('../main').allFunctions
+
+            describe('Testing on Arrays', function () {
+            
+                it('should test if an array is sorted in ascending order', function() {
+            
+                    const arr = allFunctions.sortArrayElements([5,1,3,5,2,5]);
+                    for(let i = 1; i < arr.length; i++) {
+                        assert.equal(arr[i] >= arr[i-1], true);
+                    }
+            
+                })
+            })
+        </code></pre>
+        <p>To run the the tests, run the following command in the project root directory</p>
+        <pre><code>mocha</code></pre>
+        <p><strong>Pro Tip:</strong> you can make mocha watch for file changes and re-run the tests everytime you modify the file by:</p>
+        <pre><code>mocha -w</code></pre>
+
+        <p>You can nest 'describe' blocks if that makes logical sense</p>
+        <pre><code>
+            describe('...', function () {
+                describe('...', function () {
+                    it(...);
+                    it(...)
+                    ...
+                })
+            })
+        </code></pre>
+        <h4>Mocha Hooks</h4>
+        <p>Mocha provides the hooks before(), after(), beforeEach(), and afterEach().</p>
+        <pre><code>
+            describe('hooks', function() {
+                
+                before(function() {
+                // runs before all tests in this block
+                });
+            
+                after(function() {
+                // runs after all tests in this block
+                });
+            
+                beforeEach(function() {
+                // runs before each test in this block
+                });
+            
+                afterEach(function() {
+                // runs after each test in this block
+                });
+            
+                // test cases
+            });
+        </code></pre>
+        <p>Hooks will run in the order they are defined, as appropriate; all before() hooks run (once), then any beforeEach() hooks, tests, any afterEach() hooks, and finally after() hooks (once).</p>
+        <h4>Testing Asynchronous functions</h4>
+
+        <p>We will look at testing async functions that use both <strong>Callbacks</strong> and <strong>Promises</strong></p>
+        <p>Let's create a file 'requests.js' that uses the requests module to fetch data from a 3rd party API and test it's functionality</p>
+        <pre><code>
+                //request.js
+                const request = require('request');
+                
+                const api_url = 'https://swapi.co/api/';
+                
+                
+                const getStarWarsCharacterData = function (endpoint, callback) {
+                    request.get(api_url + endpoint, function (err, resp, body) {
+                        callback(resp, JSON.parse(body));
+                    })
+                }
+                
+                
+                module.exports = {
+                    getStarWarsCharacterData: getStarWarsCharacterData
+                }
+        </code></pre>
+        <p>Testing to see if the first person matched our response</p>
+        <pre><code>
+            // test/test.js
+            const assert = require('assert');
+            const allFunctions = require('../main').allFunctions
+            const apiMethods = require('../request');
+            
+            describe('Testing Star Wars API', function () {
+                it('should fetch Luke Skywalker\'s data!', function (done) {
+                    apiMethods.getStarWarsCharacterData('people/1', function (resp, data) {
+                        assert.equal('Luke Skywalker', data['name']);
+                        done();
+                    })
+                })
+            })
+        </code></pre>
+
+        <p>We use <strong>done</strong> callback to make sure mocha waits for the async function</p>
+
+        <p>By default mocha only waits for <strong>2000ms!</strong> If your function will run longer than that, you can increase this time using:</p>
+        <pre><code>
+        it('...', function() {
+            this.timeout(&lt;timeInMilliseconds&gt;)
+            ...
+        })
+        </code></pre>
+        <p><strong>WARNING:</strong> since we want <strong>this</strong> to refer to mocha's context in the above statement, use of arrow functions are discoraged while defining 'it' callback!</p>
+        <p>Now let us create a function that returns the HTTP status code using promises:</p>
+        <pre><code>
+        const getStatusCode = function (endpoint) {
+            return new Promise((resolve, reject) => {
+                request.get(api_url + endpoint, function (err, resp, body) {
+                    resolve(resp.statusCode);
+                })
+            });
+        }
+        </code></pre>
+
+        <p>We can test it nearly the same way as we did for callbacks using <strong>done</strong> callback</p>
+        <pre><code>
+        it('should return 200 status code', function (done) {
+            
+            apiMethods.getStatusCode('people/1')
+            .then(function (status) {
+                assert.equal(status, 200);
+                done()
+            })
+        })    
+        </code></pre>
+
+        <p>Since Mocha can handle promises directly, a better way would be to return a promise:</p>
+        <pre><code>
+        it('should return 200 status code', function () {
+            
+            return apiMethods.getStatusCode('people/1')
+            .then(function (status) {
+                assert.equal(status, 200);
+            })
+        })
+        </code></pre>
+    </body>
+</html>
