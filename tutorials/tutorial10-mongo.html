@@ -1,0 +1,114 @@
+
+<html>
+<style>
+pre code {
+    background-color: #eee;
+    border: 1px solid #999;
+    display: inline-block;
+    padding: 10px;
+    font-size: large;
+  }
+</style>
+<body>
+<h2>MongoDB Tutorial</h2>
+
+<p>
+    MongoDB is a NoSQL document database, which means that entities are represented as documents rather than as rows in a table (SQL).
+</p>
+<p>
+    Objects are stored in a format similar to JSON, with key and value pairs. It's becomes easier to visualise storing the objects you use in your programs in such a database. 
+</p>
+<p>
+A database consists of one or many collections, each of which is made up of documents.
+</p>
+<h4>
+As everyone in this tutorial will be connecting to the same database, make sure anytime we ask you to use a <span style="color:red">COLLECTION</span> name you use a unique name, for example your Team Name.
+</h4>
+<h3>
+    Step 0: Installation </h3>
+    <pre><code>
+mkdir mongo_tutorial
+cd mongo_tutorial
+npm init -y
+npm install --save mongodb
+    </code></pre>
+</p>
+<p>Create a file and copy the following code into it:</p>
+<pre><code>
+    var MongoClient = require('mongodb').MongoClient
+    var url = "mongodb://USER:PWD@ds117316.mlab.com:17316/csc309db"
+    var posts = [ {user: "one", text: "I like Javascript"}, {user: "two", text: "I love python"}, {user: "three", text: "I like Ruby"}, {user: "four", text: "I like Java"}, {user: "five", text: "I love C."}]
+
+
+    MongoClient.connect(url, function(err,res){
+				if(err) console.log(err)
+				console.log("Database created");
+				db = res
+				
+				// Add functions here
+				
+    });
+
+</code></pre>
+<p>Ask your TA for USER:PWD credentials, and please don't share them outside of class.</p>
+<p>This creates (if DB didn't exist) and connects to a database called csc309db. </p>
+<p> Let us now create a collection and add documents. </p>
+<h3> Step 1: CRUD operations </h3>
+<p> The syntax of these operations follow the following format: </p>
+<pre><code>
+db.collection("COLLECTION").function_name(_parameters_)
+</code></pre>
+<p> 1.1 Create </p>
+<p> The <code>insertOne</code> and <code>insertMany</code> functions are used to create documents. 
+<pre><code>
+var data = {user: "John", text: "I can't decide!"}
+db.collection("COLLECTION").insertOne(data, function(err, res){
+			//continue
+	});
+</code></pre>
+<p><b>Task 1:</b> Insert the <code>posts</code> array into a collection. (Since we are using a common database, keep the collection names unique)</p>
+<p>1.2 Read</p>
+<p> The <code>find</code> function is used to query the database. The argument specifies conditions on the fields of the documents you want to retrieve. This function can be combined with the <code>project</code> function to restrict the fields which are returned. Check <a href="https://docs.mongodb.com/manual/tutorial/query-documents/">this link</a> to see how you can specify different selection constraints.</p> 
+<pre><code>
+  db.collection("COLLECTION").find({user:"KP"}).project({ _id:0});
+</code></pre>
+<p><b>TASK 2:</b> Find all posts that contain the word "like" in them from your collection.</p>
+<p>1.3 Update</p>
+<p>Again, we have the <code>updateOne</code> and <code>updateMany</code> functions. The first parameter here specifies the query, whereas the second is the new values to be set. Mongo provides a variety of update operators for different kinds of data - see <a href="https://docs.mongodb.com/manual/reference/operator/update/#id1" />here</a> for information about these.</p>
+<p> Say we want to modify the text of one of our posts:</p>
+<pre><code>
+db.collection("COLLECTION").update({user:"four"}, {$set: {text: "I like Javascript too!"}});
+</code></pre>
+<p>1.4 Delete</p>
+<p> Simple: <code>deleteOne(query)</code> and <code>deleteMany(query)</code>. What if you want to delete a collection? 
+<pre><code>db.collection("xyz").drop()</code></pre>
+<p><b>TASK 3:</b> Delete the post that says "I like C" from your collection. </p>
+
+
+<h3>Step 2: Data Models</h3>
+<p> Relationships between entities can be one-to-one or one-to-many. MongoDB provides two ways of specifying relationships - references and embedded documents. Which one to use depends upon the use case.</p>
+<p> Suppose we want to associate each post with comments. Which data model is that, and which method of representation would you use? <p>
+<p><b>TASK 4:</b> Let us add comments for each post, and store them as embedded documents, i.e, update each field with an additional field called <code>comments</code>, that contains the comments for each post as an array. You can define each comment to have a <code>user</code> and <code>comment</code> field.<p>
+<h3> Step 3: Data Aggregation </h3>
+<p> Map reduce is a powerful method that allows us to aggregate data in a collection. Say we want to retrieve a list of each user's friends, where friend's are defined as people who have commented on his post. </p>
+<pre><code>
+var mapFunction = function(){	
+friends = this.comments.map(comment => comment.user)
+		emit(this.user, friends);
+}
+
+var reduceFunction = function(cust_name, comments){
+			var res =  comments.reduce((accumulator, currentValue) => accumulator +","+ currentValue);
+			 return res;
+}
+
+db.collection("COLLECTION").mapReduce(mapFunction, reduceFunction, {out: "friends_list"})
+.then(function(res)
+{ 
+console.log("done"); db.close(); 
+});
+</code></pre>
+
+
+</body>
+</html>
