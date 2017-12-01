@@ -1,0 +1,110 @@
+<html>
+    <style>
+        pre code {
+            background-color: #eee;
+            border: 1px solid #999;
+            display: inline-block;
+            padding: 10px;
+          }
+    </style>
+    <body style="width:30%">
+        <h2>Cryptography and SSL/TLS Tutorial</h2>
+        
+        <h4>Public Key Cryptography</h4>
+        <p>Public key cryptography also known as asymmetric cryptography, uses two different keys, public and private keys for encryption</p>
+        <p>Either of the two can be used to encrypt a message, it's complementary key should be used for decryption</p>
+        <p>Many protocols like SSH, SSL/TLS, OpenPGP use asymmetric cryptography</p>
+        <p>The stregth of encryption is linked with the key size. A larger key is more secure, but using a very large key also impairs performance</p>
+        <p><strong>RSA</strong> is one of the most widely used asymmetric algorithm, and is used in SSL/TLS protocol</p>
+        <p>Today we will look at the set-up of ssh keys and investigate rsa public and private keys</p>
+        <p>Generating a key pair provides you with two long string of characters: a public and a private key. You can place the public key on any server, and then unlock it by connecting to it with a client that already has the private key. </p>
+        <p><strong>Step 1</strong></p>
+        <p>Creating an rsa key pair (Note: ssh also supports DSA)</p>
+        <pre><code>ssh-keygen -t rsa</code></pre>
+        <p>You'll be promted a few questions</p>
+        <pre><code>
+        ssh-keygen -t rsa
+        Generating public/private rsa key pair.
+        Enter file in which to save the key (/home/user/.ssh/id_rsa): 
+        Enter passphrase (empty for no passphrase): 
+        Enter same passphrase again: 
+        Your identification has been saved in /home/user/.ssh/id_rsa.
+        Your public key has been saved in /home/user/.ssh/id_rsa.pub.
+        The key fingerprint is:
+        4a:dd:0a:c6:35:4e:3f:ed:27:38:8c:74:44:4d:93:67 user@user
+        The key's randomart image is:
+        +--[ RSA 2048]----+
+        |          .oo.   |
+        |         .  o.E  |
+        |        + .  o   |
+        |     . = = .     |
+        |      = S = .    |
+        |     o  = +      |
+        |     o .  + o .  |
+        |           . o   |
+        |                 |
+        +-----------------+
+        </code></pre>
+        <p>
+            The keys are now placed in the folder specified by you, the default location is ~/.ssh/
+        </p>
+        <p>The public key is in the file: id_rsa.pub</p>
+        <p>The private key is in the file: id_rsa</p>
+        <p>Let us take a look at it:</p>
+        <pre><code>
+        ssh-rsa AAAAB3NzaC1yc2asdfALDKJFLKJDLF+sEDLJFasdf......
+                ...
+                ... user@user
+        </code></pre>
+        <p>So now, if you want login to a remote server using ssh without a password, you should place your public key in the remote machine's <strong>authorized_keys</strong> file</p>
+        <p><pre><code>ssh-copy-id user@121.35.71.64</code></pre></p>
+        <p>ssh-copy-id is basically equivalent to:</p>
+        <pre><code>cat ~/.ssh/id_rsa.pub | ssh user@121.35.71.64 "mkdir -p ~/.ssh && cat >>  ~/.ssh/authorized_keys"</code></pre>
+        <p>The above process was for user authentication, for a client to authenticate a server, one must place the server's public key in the client's <strong>known_hosts</strong> file</p>
+
+        <h4>Creating an HTTPs server in node (Extra Info)</h4>
+        <p>To build a HTTPs server you need to setup an SSL certificate</p>
+        <p>SSL certificate has two parts, a standard certificate and a secondary certificate</p>
+        <p>To get an SSL certificate, one must first generate a Certificate Signing Request (CSR)</p>
+        <p>One also needs to generate private key for the HTTPS connection</p>
+        <p><pre><code>openssl req -new -newkey rsa:2048 -nodes -keyout yourdomain.key -out yourdomain.csr</code></pre></p>
+        <p>Replace <em>yourdomain</em> with your actual domain name</p>
+        <p>You can now use the .csr file and sign up to get a certificate from a Certificate Authority</p>
+        <p>You then get back two .crt files (primary and intermediate certificates) which contains the digital certificate from the CA</p>
+        <p>use the following code snippet</p>
+        <pre><code>
+        const express = require('express');
+        const app = express();
+        const fs = require('fs');
+        const https = require('https');
+
+        const key = fs.readFileSync('path/to/private.key');
+        const cert = fs.readFileSync( 'path/to/primary.crt' );
+        const ca = fs.readFileSync( 'path/to/intermediate.crt' );
+        const ssl_options = {
+            key: key,
+            cert: cert,
+            ca: ca
+        }
+
+        https.createServer(options, app).listen(443); // default HTTPS port is 443
+        </code></pre>
+
+        <p>You now have a HTTPS server!</p>
+        <p>To make sure all of the HTTP traffic is diverted to HTTPS, we first also need to create a http server</p>
+        <pre><code>
+        const http = require('http');
+        http.createServer(app).listen(80);
+        </code></pre>
+        <p>Now you need to check if a request is made through a TLS connection, if yes continue, if no redirect the same request to https endpoint</p>
+        <pre><code>
+        app.use(function(req, res, next) {
+            if (req.secure) {
+                next();
+            } else {
+                res.redirect('https://' + req.headers.host + req.url);
+            }
+        });
+        </code></pre>
+    </body>
+</html>
