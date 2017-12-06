@@ -1,0 +1,43 @@
+<h1>Quiz #5 - SOLUTION</h1>
+
+<p>Converting the code snippet below to its jQuery equivalent.  Try to use the most compact notation you can.</p>
+
+<h3>Question</h3>
+<pre><code>
+  var button = document.getElementById("command");
+  button.addEventListener("click", function(e) {
+    e.preventDefault();
+    var xhr = new XMLHttpRequest();
+    xhr.open("GET","http://jsonplaceholder.typicode.com/users");
+    xhr.onload = function(e) {
+        var data = JSON.parse(xhr.response);
+        var content = document.getElementById("content");
+        content.innerText = "" ;
+        data.forEach(function(user) {
+            var item = document.createElement("div");
+            var itemEmail = document.createTextNode(user.email);
+            item.appendChild(itemEmail);
+            content.appendChild(item);
+        });
+    }
+    xhr.send();
+  });
+</code></pre>
+<h3>Solution</h3>
+<pre><code>
+  $("#command").on("click", e => {
+      $.ajax({
+          type: "GET",
+          url: "http://jsonplaceholder.typicode.com/users",
+          success: data => {
+              $.each(data, (i,user) => {
+                  $("&lt;div>")
+                  .text(user.email)
+                  .appendTo("#content")
+              })
+          }
+      })
+  })
+</code></pre>
+
+
