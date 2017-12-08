@@ -1,0 +1,133 @@
+<h1>Quiz #6 - SOLUTION</h1>
+
+<form action="/solution" method="POST">
+  <input type="number" name="student" value="" placeholder="Student Number"><br>
+  <input type="text" name="utorid" value="" placeholder="UTORID"><br>
+
+ <fieldset>
+    <legend>1. What will be the Express route for updating a specific user given an 'id'</legend>
+    <div>
+      <input type="radio" id="q1a"
+       name="q1" value="a" >
+      <label for="q1a">app.get('/users', (req, res) => { ... })</label>
+      <br>
+      <input type="radio" id="q1b"
+       name="q1" value="b" >
+      <label for="q1b">app.get('/users/id', (req, res) => { ... })</label>
+      <br>
+      <input type="radio" id="q1c"
+       name="q1" value="c" checked>
+      <label for="q1c">app.put('/users/:id', (req, res) => { ... })</label>
+      <br>
+      <input type="radio" id="q1d"
+       name="q1" value="d" >
+      <label for="q1d">app.get('/users/:id', (req, res) => { ... })</label>
+    </div>
+  </fieldset>
+ <fieldset>
+    <legend>2. What will be the best possible RESTful endpoint for adding a NEW comment for a specific user given his 'id'</legend>
+    <div>
+      <input type="radio" id="q2a"
+       name="q2" value="a" >
+      <label for="q2a">app.get('/users/comments', handler)</label>
+      <br>
+      <input type="radio" id="q2b"
+       name="q2" value="b" >
+      <label for="q2b">app.put('/users/comments', handler)</label>
+      <br>
+      <input type="radio" id="q2c"
+       name="q2" value="c" checked>
+      <label for="q2c">app.post('/users/:id/comments', handler)</label>
+      <br>
+      <input type="radio" id="q2d"
+       name="q2" value="d" >
+      <label for="q2d">app.post('/users/:id/comments/:comment_id', handler)</label>
+    </div>
+  </fieldset>
+ <fieldset>
+    <legend>3. What is the response header used to send cookies from server to user agent?
+</legend>
+    <div>
+      <input type="radio" id="q3a"
+       name="q3" value="a" >
+      <label for="q3a">Get-Cookie</label>
+      <br>
+      <input type="radio" id="q3b"
+       name="q3" value="b" checked>
+      <label for="q3b">Set-Cookie</label>
+      <br>
+      <input type="radio" id="q3c"
+       name="q3" value="c" >
+      <label for="q3c">Post-Cookie</label>
+      <br>
+      <input type="radio" id="q3d"
+       name="q3" value="d" >
+      <label for="q3d">Put-Cookie</label>
+    </div>
+  </fieldset>  
+  <fieldset>
+    <legend><p>4. We would like to create a route called '/dashboard' that should check if the a user's cookie is present in the request headers.  If the user's cookie is NOT present, the app should redirect the user to '/login' route else it should render the 'dashboard.html' page.</p>
+    
+ <p>   NOTE: Let us assume we use res.redirect('route_path') to redirect to the specified 'route_path',
+          res.render('somepage.html') to render the specified html page,
+          and res.cookies object contains the cookies</p>
+
+
+<pre><code>
+    app.get('/dashboard', (req, res) => {
+
+        // checking if user's cookie is set
+        if (req.cookies && req.cookies.user) {
+            
+            // if the user cookie is set, check if the user exists in the Database
+            UserDB.findOne({email: req.cookies.user.email}, (err, user) => {
+
+                if (user) {
+                    // user is present.
+
+                    _______________ // BLANK 1
+                } else {
+
+                    // else this user is different from the one set in the cookie
+                    // we reset the cookie session info
+                    res.cookies.reset();
+                    res.redirect('/login')
+                }
+            })
+        } else {
+
+            // the user's cookie is not set
+
+            _______________ // BLANK 2
+        }
+
+    })
+</code></pre>
+<p>    Pick the option that completes the blank spaces in the given code fragment</p>
+</legend>
+    <div>
+      <input type="radio" id="q4a"
+       name="q4" value="a" checked>
+      <label for="q4a">BLANK 1. res.render('dashboard.html')<br>
+        BLANK 2. res.redirect('/login')</label>
+      <br><br>
+      <input type="radio" id="q4b"
+       name="q4" value="b" >
+      <label for="q4b">BLANK 1. res.redirect('/login')<br>
+        BLANK 2. res.render('dashboard.html')</label>
+      <br><br>
+      <input type="radio" id="q4c"
+       name="q4" value="c" >
+      <label for="q4c">BLANK 1. res.render('dashboard.html')<br>
+        BLANK 2. res.render('dashboard.html')</label>
+      <br><br>
+      <input type="radio" id="q4d"
+       name="q4" value="d" >
+      <label for="q4d">BLANK 1. res.redirect('/login')<br>
+        BLANK 2. res.redirect('/login')</label>
+    </div>
+  </fieldset>  
+  <input type="submit">
+</form>
+
+

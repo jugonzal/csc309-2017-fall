@@ -1,0 +1,101 @@
+<h1>Quiz #9 - SOLUTION</h1>
+
+<form action="/solution" method="POST">
+  <input type="text" name="utorid" value="" placeholder="UTORID"><br>
+  <input type="text" name="name" value="" placeholder="Full Name"><br>
+<br>
+<p>For questions 1 and 2: Consider a collection “purchase” containing documents with the following fields: 
+</p>
+<pre><code>
+{
+    _id: ID,
+    name: customer_name,
+    address: customer_address,
+    ph_num: customer_phone_number,
+    amount: bill_amount
+}
+</code></pre>
+ <fieldset>
+    <legend>1. Say we want to display only the name and address of each customer. Which of the following would you use?</legend>
+    <div>
+      <input type="radio" id="q1a"
+       name="q1" value="a">
+      <label for="q1a">db.collection(“posts”).find({name: true, address: true})</label>
+      <br>
+      <input type="radio" id="q1b"
+       name="q1" value="b" checked>
+      <label for="q1b">db.collection(“posts”).find({}, {_id: false, name: true, address: true, ph_num: false, amount: false})</label>
+      <br>
+      <input type="radio" id="q1c"
+       name="q1" value="c">
+      <label for="q1c">db.collection(“posts”).find({}, {_id:false, name: true, address: true})</label>
+      <br>
+      <input type="radio" id="q1d"
+       name="q1" value="d">
+      <label for="q1d">None of the above</label>
+    </div>
+  </fieldset>
+ <fieldset>
+    <legend>2. If we want to print out the total spending of each user using Map-Reduce, with the map function defined as <pre><code>
+    function() {
+        emit(A, B);
+        }
+      </code></pre>
+  What is (A, B)?</legend>
+    <div>
+      <input type="radio" id="q2a"
+       name="q2" value="a">
+      <label for="q2a">(name, amount)</label>
+      <br>
+      <input type="radio" id="q2b"
+       name="q2" value="b">
+      <label for="q2b">(_id, amount)</label>
+      <br>
+      <input type="radio" id="q2c"
+       name="q2" value="c">
+      <label for="q2c">(this.name, Array.sum(this.amount))</label>
+      <br>
+      <input type="radio" id="q2d"
+       name="q2" value="d" checked>
+      <label for="q2d">(this.name, this.amount)</label>
+    </div>
+  </fieldset>
+ <fieldset>
+    <legend>3. Now we want to specify the list of items bought by the customer in each purchase. Each item has an item_code and a price. What kind of a relationship would this be between ‘purchase’ and ‘item’?
+</legend>
+    <div>
+      <input type="radio" id="q3a"
+       name="q3" value="a">
+      <label for="q3a">One-to-one</label>
+      <br>
+      <input type="radio" id="q3b"
+       name="q3" value="b" checked>
+      <label for="q3b">One-to-many</label>
+      <br>
+      <input type="radio" id="q3c"
+       name="q3" value="c">
+      <label for="q3c">Many-to-many</label>
+      <br>
+      <input type="radio" id="q3d"
+       name="q3" value="d">
+      <label for="q3d">None of the above</label>
+    </div>
+  </fieldset>  
+  <fieldset>
+    <legend>4. All documents in a collection must have the same fields.
+</legend>
+    <div>
+      <input type="radio" id="q4a"
+       name="q4" value="a">
+      <label for="q4a">True</label>
+      <br>
+      <input type="radio" id="q4b"
+       name="q4" value="b" checked>
+      <label for="q4b">False</label>
+      <br>
+    </div>
+  </fieldset>  
+  <input type="submit">
+</form>
+
+
