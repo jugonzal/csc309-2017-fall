@@ -1,40 +1,41 @@
-# Week 1: Review
+// declaring a function
+function square(number) {
+  return number * number
+}
 
-- Using HTTP (methods/urls) to describe the structure of an API.
-- Overview of what a REST API looks like
-- Tutorial: CURL to manually test these concepts
+// using a function expression instead
+var cube = function(number) {
+  return square(number)*number
+}
 
-# Week 2: Objective
+// notice that the variable above can be used to call the function
+console.log(cube(2))
 
-To be able to code a Javascript program that is capable of calling an API via HTTP
-and reading a JSON response, as demonstrated by 
+// in the function below, operation is a string that will decide which function to call
+function calc(number,operation) {
+  if (operation == 'square') {
+    return square(number)
+  } else if (operation == 'cube') {
+    return cube(number)
+  }
+}
+console.log(calc(2,'square'))
+console.log(calc(2,'cube'))
 
-https://github.com/jugonzal/csc309-2017-fall/blob/master/code/week2/request.js
+// in the function below, operation is a callback
+function betterCalc(number,operation) {
+    return operation(number)
+}
 
+// the decision of which operation to call is
+// made by whoever is calling betterCalc
+console.log(betterCalc(2,square))
+console.log(betterCalc(2,cube))
 
-## Learning objectives:
-
-Here is a list of concepts that students need to learn in order to accomplish the objective:
-
-- Declaring functions
-- Function expressions
-- Calling functions
-- Declaring variables / Function scope
-- Callbacks ** This is the most difficult concept for most students **
-- Objects
-- Dot notation / bracket notation
-
-These concepts are explained with plenty of examples in the following pages:
-https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Functions
-https://developer.mozilla.org/en-US/docs/Learn/JavaScript/Objects/Basics
-https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON
-
-Here is a live-code session demonstrating most aspects of Objects/Dot notation:
-https://github.com/jugonzal/csc309-2017-fall/blob/master/code/week2/data4pm.js
-
-My approach to teach these concepts is to live-code basic examples as I explain.
+// or we simply pass a callback using a function expression
+console.log(betterCalc(3,function(number) {
+  return number + number
+}))
 
 
-# Tutorial
 
-http://www.teach.cs.toronto.edu/~csc309h/fall/tutorials/tutorial02-request.html

@@ -14,6 +14,7 @@
 //
 // Full 'request' documentation: https://www.npmjs.com/package/request
 
+var fullData = "Never forget"
 let request = require('request')
 
 // This function is being declared to issue a HTTP GET to the given API.
@@ -34,7 +35,8 @@ function getUsers(foundUsers) {
     // safe status codes.   Some RESTful APIs may return 201 under
     // certain conditions.
     if (response.statusCode === 200) {
-      let fullData = JSON.parse(body);
+      var fullData = "Just starting"
+      var fullData = JSON.parse(body);
       console.log(fullData);
       if (fullData.data) {
         console.log("Last Name of first user: ", fullData.data[0].last_name)
@@ -55,4 +57,4 @@ function getUsers(foundUsers) {
 // this output was put here on purpose to demonstrate the asynchronous 
 // nature of the code above.  Notice that when running it, this message
 // will appear before anything else.
-console.log("I'm done with everything!!!")
+console.log("I'm done with everything!!!",fullData)
