@@ -7,8 +7,24 @@ $(function () {
 
   console.log('DOMContentLoaded has fired');
 
-  $('#data').on('click', function(ev) {
+  $('#button').on('click', function(ev) {
     console.log(ev.offsetX, ev.offsetY);
+     // What you're more likely to do, is pass an HTML-like fragment.
+     var aList = $('<ol>')
+      .appendTo('body')
+      .css({
+        color: 'red'
+      });
+
+    $.getJSON('https://jsonplaceholder.typicode.com/todos',function( data ) {
+      $.each( data, function( key, val ) {
+        console.log("each data",key,val)
+        let newLI = $('<li>')
+          .text(val.title)
+          .appendTo(aList)
+      })
+    })
+    return false;
   });
 
   var myH1 = $('h1');
@@ -19,17 +35,7 @@ $(function () {
     fontFamily: 'Arial'
   });
 
-  // What you're more likely to do, is pass an HTML-like fragment.
-  var aList = $(`<ol>
-    <li>One</li>
-    <li>Two</li>
-    <li>Three</li>
-  </ol>`)
-    .appendTo('body')
-    .css({
-      color: 'red'
-    });
-
+ 
   // jQuery is all about chaining. That is, most of these helper methods
   // return the collection they were called on.
   $('<h3>').text('this is an h3').appendTo('body');
